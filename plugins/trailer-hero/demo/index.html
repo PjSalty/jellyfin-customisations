@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Trailer Hero demo</title>
+    <link rel="stylesheet" href="../trailer-hero.css">
+    <style>
+        body { margin: 0; background: #101010; color: rgba(255, 255, 255, 0.7); font-family: system-ui, sans-serif; }
+        .row { padding: 1.5rem 4%; }
+        .row div { height: 8rem; margin-top: 0.6rem; border-radius: 0.35rem; background: #17171b; }
+    </style>
+</head>
+<body>
+    <div id="indexPage" class="page homePage">
+        <div id="homeTab" class="tabContent pageTabContent">
+            <div class="sections"><div class="row"><h3>Continue watching</h3><div></div></div></div>
+        </div>
+    </div>
+    <script src="fake-api.js"></script>
+    <script>
+        // ?nosound=1 shows the admin switch: allowSound false hides the button.
+        if (/[?&]nosound=1/.test(location.search)) window.TrailerHeroConfig = { allowSound: false };
+    </script>
+    <script src="../trailer-hero.js"></script>
+    <script>
+        // What the real client does when the home view shows.
+        document.getElementById('indexPage').dispatchEvent(new CustomEvent('viewshow', { bubbles: true }));
+    </script>
+</body>
+</html>

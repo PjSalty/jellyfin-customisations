@@ -1,0 +1,251 @@
+/*
+ * Trailer Hero. MIT licence, see LICENSE.
+ * Chromium 94 safe: no :has(), color-mix(), container queries or nesting.
+ * Only opacity and transform are animated.
+ * Theme it by overriding the custom properties on :root.
+ */
+:root {
+    --trailer-hero-bg: #0a0a0c;
+    --trailer-hero-text: #f7f4f1;
+    --trailer-hero-dim: rgba(247, 244, 241, 0.68);
+    --trailer-hero-accent: #e5383b;
+    --trailer-hero-focus: #fff;
+    --trailer-hero-radius: 0.35em;
+    --trailer-hero-height: clamp(22rem, 56vh, 42rem);
+    --trailer-hero-pad: 4%;
+    /* Set to the header height when the theme makes the header transparent. */
+    --trailer-hero-header-offset: 0px;
+}
+
+.trailer-hero {
+    position: relative;
+    width: 100%;
+    height: var(--trailer-hero-height);
+    margin-top: calc(-1 * var(--trailer-hero-header-offset));
+    overflow: hidden;
+    background: var(--trailer-hero-bg);
+    color: var(--trailer-hero-text);
+    font-size: 1rem;
+}
+
+.trailer-hero__media {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.trailer-hero__bg,
+.trailer-hero__video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.9s ease;
+}
+
+.trailer-hero__bg {
+    background-size: cover;
+    background-position: center 30%;
+}
+
+.trailer-hero__bg.is-active,
+.trailer-hero__video.is-playing {
+    opacity: 1;
+}
+
+.trailer-hero__video {
+    object-fit: cover;
+    pointer-events: none;
+}
+
+.trailer-hero__scrim {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background:
+        linear-gradient(90deg, rgba(10, 10, 12, 0.92) 0, rgba(10, 10, 12, 0.55) 38%, rgba(10, 10, 12, 0) 70%),
+        linear-gradient(0deg, rgba(10, 10, 12, 1) 0, rgba(10, 10, 12, 0) 35%);
+}
+
+.trailer-hero__content {
+    position: absolute;
+    left: var(--trailer-hero-pad);
+    bottom: 2.4em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7em;
+    width: 34em;
+    max-width: calc(100% - 2 * var(--trailer-hero-pad));
+    opacity: 0;
+    transform: translateY(0.6em);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.trailer-hero__content.is-visible {
+    opacity: 1;
+    transform: none;
+}
+
+.trailer-hero__title {
+    margin: 0;
+    font-weight: 800;
+    font-size: 3.2em;
+    line-height: 0.98;
+}
+
+.trailer-hero__logo {
+    display: block;
+    max-width: 100%;
+    max-height: 5.5em;
+    object-fit: contain;
+    object-position: left bottom;
+}
+
+/* With a logo the text title stays for screen readers only. */
+.trailer-hero__title.has-logo .trailer-hero__name {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+.trailer-hero__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.3em 0.9em;
+    font-size: 0.9em;
+    color: var(--trailer-hero-dim);
+}
+
+.trailer-hero__badge {
+    padding: 0 0.35em;
+    border: 1px solid var(--trailer-hero-dim);
+    border-radius: 0.25em;
+    color: var(--trailer-hero-text);
+    font-size: 0.82em;
+    font-weight: 600;
+}
+
+.trailer-hero__overview {
+    display: -webkit-box;
+    margin: 0;
+    overflow: hidden;
+    line-height: 1.45;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+.trailer-hero__buttons {
+    display: flex;
+    gap: 0.6em;
+    margin-top: 0.3em;
+}
+
+.trailer-hero__btn {
+    padding: 0.62em 1.25em;
+    border: 0;
+    border-radius: var(--trailer-hero-radius);
+    font: inherit;
+    font-size: 0.95em;
+    font-weight: 600;
+    line-height: 1.2;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: transform 0.15s ease;
+}
+
+.trailer-hero__btn--primary {
+    background: #fff;
+    color: var(--trailer-hero-bg);
+}
+
+.trailer-hero__btn--secondary {
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--trailer-hero-text);
+}
+
+.trailer-hero__btn:hover,
+.trailer-hero__btn:focus {
+    transform: scale(1.06);
+}
+
+.trailer-hero__btn:focus {
+    outline: 0.2em solid var(--trailer-hero-focus);
+    outline-offset: 0.18em;
+}
+
+.trailer-hero__dots {
+    position: absolute;
+    right: var(--trailer-hero-pad);
+    bottom: 1.2em;
+    display: flex;
+    gap: 0.45em;
+}
+
+.trailer-hero__dots i {
+    width: 0.45em;
+    height: 0.45em;
+    border-radius: 50%;
+    background: var(--trailer-hero-dim);
+}
+
+.trailer-hero__dots i.is-active {
+    background: var(--trailer-hero-accent);
+}
+
+.trailer-hero__sound {
+    position: absolute;
+    top: calc(var(--trailer-hero-header-offset) + 0.8em);
+    right: var(--trailer-hero-pad);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(10, 10, 12, 0.55);
+    color: var(--trailer-hero-text);
+    cursor: pointer;
+    transition: transform 0.15s ease;
+}
+
+.trailer-hero__sound:hover,
+.trailer-hero__sound:focus {
+    transform: scale(1.1);
+}
+
+.trailer-hero__sound:focus {
+    outline: 0.2em solid var(--trailer-hero-focus);
+    outline-offset: 0.18em;
+}
+
+.trailer-hero__icon-on { display: none; }
+.trailer-hero__sound.is-on .trailer-hero__icon-on { display: inline; }
+.trailer-hero__sound.is-on .trailer-hero__icon-off { display: none; }
+
+@media (max-width: 600px) {
+    .trailer-hero { --trailer-hero-height: 26rem; }
+    .trailer-hero__title { font-size: 2.3em; }
+    .trailer-hero__content { bottom: 1.8em; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .trailer-hero__bg,
+    .trailer-hero__video,
+    .trailer-hero__content,
+    .trailer-hero__sound,
+    .trailer-hero__btn {
+        transition: none;
+    }
+}
